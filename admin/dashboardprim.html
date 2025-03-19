@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="assets/css/dash.css">
+</head>
+<body class="body">
+    <header class = "header"></header>
+    <section class = "sidebar"></section>
+    <main class = "main">
+        <div class="card">
+            <div class="content-container">
+                <div class="header">
+                    <input type="text" class="search-bar" placeholder="Search...">
+                    <span>Admin Portal</span>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Program Management</h3>
+                        <button class="btn btn-primary">+ Add Program</button>
+                    </div>
+                    <div class="card-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Program Name</th>
+                                    <th>Department</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>P001</td>
+                                    <td>BSc Computer Science</td>
+                                    <td>Computing</td>
+                                    <td><span class="status status-active">Active</span></td>
+                                    <td>
+                                        <button class="btn">Edit</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>P002</td>
+                                    <td>BA English Literature</td>
+                                    <td>Humanities</td>
+                                    <td><span class="status status-active">Active</span></td>
+                                    <td>
+                                        <button class="btn">Edit</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>P003</td>
+                                    <td>MSc Data Science</td>
+                                    <td>Computing</td>
+                                    <td><span class="status status-pending">Pending</span></td>
+                                    <td>
+                                        <button class="btn">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        </div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+    </main>
+   
+</body>
+</html>
