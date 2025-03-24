@@ -1,8 +1,13 @@
 <?php
 include 'db.php'; // Include database connection
 
-$query = "SELECT * FROM staff";
+// Fetch staff data
+$query = "SELECT StaffID, Name FROM staff";
 $result = $conn->query($query);
+
+if (!$result) {
+    die("Query failed: " . $conn->error);
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,14 +22,21 @@ $result = $conn->query($query);
 <h2>User Information</h2>
 
 <?php
-while ($row = $result->fetch_assoc()) { ?>
-    <div>
-    <?php echo '<img src="data:image;base64,'.base64_encode($row['image']).'" alt="image" style="width:100px; height:100px;">'; ?>
-        <h3><?php echo $row['Name']; ?></h3>
-        <!-- <p>Job Title: <?php echo $row['job_title']; ?></p> -->
-    </div>
-    <hr>
-<?php } ?>
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) { ?>
+        <div>
+            <h3>ID: <?php echo htmlspecialchars($row['StaffID']); ?></h3>
+            <h3>Name: <?php echo htmlspecialchars($row['Name']); ?></h3>
+        </div>
+        <hr>
+    <?php } 
+} else {
+    echo "<p>No staff found.</p>";
+}
+
+// Close database connection
+$conn->close();
+?>
 
 </body>
 </html>

@@ -17,7 +17,9 @@
             </div>
             
             <div class="menu-item">
+                <a href="module.php">
                 <span>Programme</span>
+            </a>
             </div>
             <div class="menu-item">
                 <span>Modules</span>

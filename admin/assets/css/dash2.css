@@ -6,6 +6,11 @@
     font-family: Arial, sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
+
 body {
     background-color: #f5f5f5;
     display: flex;
@@ -31,6 +36,7 @@ body {
     display: flex;
     align-items: center;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .menu-item:hover {
