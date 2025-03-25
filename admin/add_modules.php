@@ -9,7 +9,7 @@
 <body>
     <div class="form-container">
         <h2>Add New Modules</h2>
-        <form action="#" method="post">
+        <form action="post" method="post">
             <div class="form-group">
                 <label for="module">Module Name:</label>
                 <input type="text" id="module" name="module" required>
