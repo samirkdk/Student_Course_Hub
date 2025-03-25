@@ -124,12 +124,10 @@ try {
 
     <!-- Navigation -->
     <nav>
-        <a href=" ">Home</a>
-        <a href="../Courses/courses_front.php">View Courses</a>
+       <a href="../Courses/courses_front.php">View Courses</a>
         <a href="../registration/register_front.php">Register Interest</a>
         <a href="../registration/unregister_front.php">Unregister Interest</a>
-        <a href=" ">Contact Us</a>
-    </nav>
+       </nav>
 
     <!-- Main content -->
     <div class="container">

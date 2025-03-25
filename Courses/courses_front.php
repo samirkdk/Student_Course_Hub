@@ -1,5 +1,5 @@
 <?php
-require 'courses.php'; 
+require 'courses.php';
 ?>
 
 <!DOCTYPE html>
@@ -17,25 +17,23 @@ require 'courses.php';
 
     <nav role="navigation" aria-label="Main navigation">
         <ul>
-            <li><a href="#" tabindex="0">Home</a></li>
             <li><a href="../registration/register_front.php" tabindex="0">Register Interest</a></li>
             <li><a href="../registration/unregister_front.php" tabindex="0">Unregister Interest</a></li>
             <li><a href="../registration/mailing_list.php" tabindex="0">Mailing List</a></li>
-            <li><a href="#" tabindex="0">Contact Us</a></li>
+            <li><a href="../staff/staff.php" tabindex="0">Staff</a></li>
+          
         </ul>
     </nav>
 
     <main class="container">
-        <!-- Undergraduate Programmes -->
         <section class="programme-section" aria-labelledby="ug-heading">
             <h2 id="ug-heading">Undergraduate Programmes</h2>
             <?php foreach ($ug_programmes as $prog): ?>
                 <article class="programme-card">
                     <h3><?php echo htmlspecialchars($prog['ProgrammeName']); ?></h3>
                     <p><?php echo htmlspecialchars($prog['Description']); ?></p>
-                    <p><strong>Programme Leader:</strong> <a href="../staff_details.php?staff_id=<?php echo $prog['ProgrammeLeaderID']; ?>" tabindex="0"><?php echo htmlspecialchars($prog['ProgrammeLeader']); ?></a></p>
+                    <p><strong>Programme Leader:</strong> <a href="/Student_Course_Hub-1/staff/staff_details.php?staff_id=<?php echo $prog['ProgrammeLeaderID']; ?>" tabindex="0"><?php echo htmlspecialchars($prog['ProgrammeLeader']); ?></a></p>
 
-                    <!-- Highlights -->
                     <div class="highlights">
                         <h4>Programme Highlights</h4>
                         <ul>
@@ -48,7 +46,6 @@ require 'courses.php';
                         </ul>
                     </div>
 
-                    <!-- Entry Requirements -->
                     <div class="requirements">
                         <h4>Entry Requirements</h4>
                         <ul>
@@ -61,7 +58,6 @@ require 'courses.php';
                         </ul>
                     </div>
 
-                    <!-- Career Prospects -->
                     <div class="careers">
                         <h4>Career Prospects</h4>
                         <ul>
@@ -74,11 +70,10 @@ require 'courses.php';
                         </ul>
                     </div>
 
-                    <!-- Modules by Year -->
                     <div class="modules">
                         <?php
                         $modules = getModulesByProgramme($pdo, $prog['ProgrammeID']);
-                        $years = [1, 2, 3]; // UG has 3 years
+                        $years = [1, 2, 3];
                         foreach ($years as $year):
                         ?>
                             <div class="year">
@@ -89,7 +84,7 @@ require 'courses.php';
                                     foreach ($modules as $module) {
                                         if ($module['Year'] == $year) {
                                             $has_modules = true;
-                                            echo "<li>" . htmlspecialchars($module['ModuleName']) . " - " . htmlspecialchars($module['Description']) . "<br><strong>Module Leader:</strong> <a href='../staff_details.php?staff_id=" . $module['ModuleLeaderID'] . "' tabindex='0'>" . htmlspecialchars($module['ModuleLeader']) . "</a></li>";
+                                            echo "<li>" . htmlspecialchars($module['ModuleName']) . " - " . htmlspecialchars($module['Description']) . "<br><strong>Module Leader:</strong> <a href='/Student_Course_Hub-1/staff/staff_details.php?staff_id=" . $module['ModuleLeaderID'] . "' tabindex='0'>" . htmlspecialchars($module['ModuleLeader']) . "</a></li>";
                                         }
                                     }
                                     if (!$has_modules) {
@@ -101,7 +96,6 @@ require 'courses.php';
                         <?php endforeach; ?>
                     </div>
 
-                    <!-- Action Buttons -->
                     <div class="action-buttons">
                         <a href="../registration/register_front.php?programme_id=<?php echo $prog['ProgrammeID']; ?>" class="register-btn" tabindex="0">Register Interest</a>
                         <a href="../registration/unregister_front.php?programme_id=<?php echo $prog['ProgrammeID']; ?>" class="unregister-btn" tabindex="0">Unregister Interest</a>
@@ -110,16 +104,14 @@ require 'courses.php';
             <?php endforeach; ?>
         </section>
 
-        <!-- Postgraduate Programmes -->
         <section class="programme-section" aria-labelledby="pg-heading">
             <h2 id="pg-heading">Postgraduate Programmes</h2>
             <?php foreach ($pg_programmes as $prog): ?>
                 <article class="programme-card">
                     <h3><?php echo htmlspecialchars($prog['ProgrammeName']); ?></h3>
                     <p><?php echo htmlspecialchars($prog['Description']); ?></p>
-                    <p><strong>Programme Leader:</strong> <a href="../staff_details.php?staff_id=<?php echo $prog['ProgrammeLeaderID']; ?>" tabindex="0"><?php echo htmlspecialchars($prog['ProgrammeLeader']); ?></a></p>
+                    <p><strong>Programme Leader:</strong> <a href="/Student_Course_Hub-1/staff/staff_details.php?staff_id=<?php echo $prog['ProgrammeLeaderID']; ?>" tabindex="0"><?php echo htmlspecialchars($prog['ProgrammeLeader']); ?></a></p>
 
-                    <!-- Highlights -->
                     <div class="highlights">
                         <h4>Programme Highlights</h4>
                         <ul>
@@ -132,7 +124,6 @@ require 'courses.php';
                         </ul>
                     </div>
 
-                    <!-- Entry Requirements -->
                     <div class="requirements">
                         <h4>Entry Requirements</h4>
                         <ul>
@@ -145,7 +136,6 @@ require 'courses.php';
                         </ul>
                     </div>
 
-                    <!-- Career Prospects -->
                     <div class="careers">
                         <h4>Career Prospects</h4>
                         <ul>
@@ -158,7 +148,6 @@ require 'courses.php';
                         </ul>
                     </div>
 
-                    <!-- Modules by Year (PG has only 1 year) -->
                     <div class="modules">
                         <div class="year">
                             <h4>Year 1</h4>
@@ -169,7 +158,7 @@ require 'courses.php';
                                 foreach ($modules as $module) {
                                     if ($module['Year'] == 1) {
                                         $has_modules = true;
-                                        echo "<li>" . htmlspecialchars($module['ModuleName']) . " - " . htmlspecialchars($module['Description']) . "<br><strong>Module Leader:</strong> <a href='../staff_details.php?staff_id=" . $module['ModuleLeaderID'] . "' tabindex='0'>" . htmlspecialchars($module['ModuleLeader']) . "</a></li>";
+                                        echo "<li>" . htmlspecialchars($module['ModuleName']) . " - " . htmlspecialchars($module['Description']) . "<br><strong>Module Leader:</strong> <a href='/Student_Course_Hub-1/staff/staff_details.php?staff_id=" . $module['ModuleLeaderID'] . "' tabindex='0'>" . htmlspecialchars($module['ModuleLeader']) . "</a></li>";
                                     }
                                 }
                                 if (!$has_modules) {
@@ -180,7 +169,6 @@ require 'courses.php';
                         </div>
                     </div>
 
-                    <!-- Action Buttons -->
                     <div class="action-buttons">
                         <a href="../registration/register_front.php?programme_id=<?php echo $prog['ProgrammeID']; ?>" class="register-btn" tabindex="0">Register Interest</a>
                         <a href="../registration/unregister_front.php?programme_id=<?php echo $prog['ProgrammeID']; ?>" class="unregister-btn" tabindex="0">Unregister Interest</a>

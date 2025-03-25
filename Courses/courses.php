@@ -3,7 +3,7 @@ require 'db_connect.php';
 
 function getProgrammes($pdo, $level_id) {
     $stmt = $pdo->prepare("
-        SELECT p.ProgrammeID, p.ProgrammeName, p.Description, p.Highlights, p.EntryRequirements, p.CareerProspects, s.Name AS ProgrammeLeader
+        SELECT p.ProgrammeID, p.ProgrammeName, p.Description, p.Highlights, p.EntryRequirements, p.CareerProspects, p.ProgrammeLeaderID, s.Name AS ProgrammeLeader
         FROM Programmes p
         JOIN Staff s ON p.ProgrammeLeaderID = s.StaffID
         WHERE p.LevelID = :level_id
@@ -14,7 +14,7 @@ function getProgrammes($pdo, $level_id) {
 
 function getModulesByProgramme($pdo, $programme_id) {
     $stmt = $pdo->prepare("
-        SELECT m.ModuleName, m.Description, s.Name AS ModuleLeader, pm.Year
+        SELECT m.ModuleName, m.Description, m.ModuleLeaderID, s.Name AS ModuleLeader, pm.Year
         FROM ProgrammeModules pm
         JOIN Modules m ON pm.ModuleID = m.ModuleID
         JOIN Staff s ON m.ModuleLeaderID = s.StaffID
@@ -25,6 +25,6 @@ function getModulesByProgramme($pdo, $programme_id) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-$ug_programmes = getProgrammes($pdo, 1); // Undergraduate (LevelID = 1)
-$pg_programmes = getProgrammes($pdo, 2); // Postgraduate (LevelID = 2);
+$ug_programmes = getProgrammes($pdo, 1);
+$pg_programmes = getProgrammes($pdo, 2);
 ?>

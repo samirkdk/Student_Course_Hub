@@ -108,10 +108,10 @@ $selected_programme_id = isset($_GET['programme_id']) ? (int)$_GET['programme_id
     </header>
 
     <nav>
-        <a href=" ">Home</a>
+        
         <a href="../Courses/courses_front.php">View Courses</a>
         <a href="register_front.php">Register Interest</a>
-        <a href=" ">Contact Us</a>
+       
     </nav>
 
     <div class="container">
