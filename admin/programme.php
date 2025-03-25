@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../database/db.php';
 
 
-$query = "SELECT * FROM programmes";
+$query = "SELECT * FROM Programmes";
 $result = $conn->query($query);
 ?>
 
