@@ -1,4 +1,16 @@
- <!DOCTYPE html>
+<?php
+
+
+require_once __DIR__ . '/../database/db.php'; // Include DB connection
+
+// Fetch stats
+$totalPrograms = $conn->query("SELECT COUNT(*) as total FROM Programmes")->fetch_assoc()['total'];
+$activeModules = $conn->query("SELECT COUNT(*) as total FROM Modules")->fetch_assoc()['total'];
+$totalStudents = $conn->query("SELECT COUNT(*) as total FROM InterestedStudents WHERE active = TRUE")->fetch_assoc()['total'];
+
+$conn->close();
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
    
@@ -17,13 +29,16 @@
             </div>
             
             <div class="menu-item">
-                <a href="module.php">
+                <a href="programme.php">
                 <span>Programme</span>
             </a>
             </div>
             <div class="menu-item">
+                <a href="module.php">
                 <span>Modules</span>
+            </a>
             </div>
+           
             <div class="menu-item">
                 <span>Students</span>
             </div>
@@ -52,8 +67,6 @@
                             <th>ID</th>
                             <th>Program Name</th>
                             <th>Level</th>
-                            <th>Status</th>
-                            <th>Actions</th>
                             <th>Description</th>
                         </tr>
                     </thead>
@@ -61,8 +74,8 @@
                         <tr>
                             <td>P001</td>
                             <td>BSc Computer Science</td>
-                            <td>Computing</td>
-                            <td><span class="status status-active">Active</span></td>
+                            <td>undergraduate</td>
+                            <td></td>
                             <td>
                                 <button class="btn">Edit</button>
                             </td>
@@ -102,7 +115,6 @@
                             <th>Code</th>
                             <th>Module Name</th>
                             <th>Credits</th>
-                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -111,7 +123,6 @@
                             <td>CS101</td>
                             <td>Introduction to Programming</td>
                             <td>15</td>
-                            <td><span class="status status-active">Active</span></td>
                             <td>
                                 <button class="btn">Edit</button>
                             </td>
@@ -120,20 +131,11 @@
                             <td>CS205</td>
                             <td>Database Systems</td>
                             <td>20</td>
-                            <td><span class="status status-active">Active</span></td>
                             <td>
                                 <button class="btn">Edit</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>CS310</td>
-                            <td>Advanced Web Development</td>
-                            <td>15</td>
-                            <td><span class="status status-inactive">Inactive</span></td>
-                            <td>
-                                <button class="btn">Edit</button>
-                            </td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
@@ -147,15 +149,15 @@
                 <div class="stats-container">
                     <div class="stat-box">
                         <h4>Total Programs</h4>
-                        <span class="stat-number">42</span>
+                        <span class="stat-number"><?php echo $totalPrograms; ?></span>
                     </div>
                     <div class="stat-box">
                         <h4>Active Modules</h4>
-                        <span class="stat-number">218</span>
+                        <span class="stat-number"><?php echo $activeModules; ?></span>
                     </div>
                     <div class="stat-box">
                         <h4>Total Students</h4>
-                        <span class="stat-number">12,450</span>
+                        <span class="stat-number"><?php echo $totalStudents; ?></span>
                     </div>
                 </div>
             </div>
