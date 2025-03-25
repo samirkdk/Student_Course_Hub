@@ -7,7 +7,16 @@ require_once __DIR__ . '/../database/db.php'; // Include DB connection
 $totalPrograms = $conn->query("SELECT COUNT(*) as total FROM Programmes")->fetch_assoc()['total'];
 $activeModules = $conn->query("SELECT COUNT(*) as total FROM Modules")->fetch_assoc()['total'];
 $totalStudents = $conn->query("SELECT COUNT(*) as total FROM InterestedStudents WHERE active = TRUE")->fetch_assoc()['total'];
+// Fetch Programs
+$programsQuery = "SELECT p.ProgrammeID, p.ProgrammeName, l.LevelName, p.Description 
+                  FROM Programmes p 
+                  JOIN Levels l ON p.LevelID = l.LevelID";
+$programsResult = $conn->query($programsQuery);
 
+// Fetch Modules
+$modulesQuery = "SELECT ModuleID, ModuleName, Description 
+                 FROM Modules";
+$modulesResult = $conn->query($modulesQuery);
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -60,87 +69,76 @@ $conn->close();
                 
                 <button class="btn btn-primary">+ Add Program</button></a>
             </div>
-            <div class="card-content">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Program Name</th>
-                            <th>Level</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>P001</td>
-                            <td>BSc Computer Science</td>
-                            <td>undergraduate</td>
-                            <td></td>
-                            <td>
-                                <button class="btn">Edit</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>P002</td>
-                            <td>BA English Literature</td>
-                            <td>Humanities</td>
-                            <td><span class="status status-active">Active</span></td>
-                            <td>
-                                <button class="btn">Edit</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>P003</td>
-                            <td>MSc Data Science</td>
-                            <td>Computing</td>
-                            <td><span class="status status-pending">Pending</span></td>
-                            <td>
-                                <button class="btn">Edit</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <!-- Programs Card -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Program Management</h3>
         </div>
-        
-        <div class="card">
-            <div class="card-header">
-                <h3>Module Management</h3>
-                <a href="add_modules.php"><button class="btn btn-primary">+ Add Module</button></a>
-            </div>
-            <div class="card-content">
-                <table>
-                    <thead>
+        <div class="card-content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Program Name</th>
+                        <th>Level</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($row = $programsResult->fetch_assoc()) { ?>
                         <tr>
-                            <th>Code</th>
-                            <th>Module Name</th>
-                            <th>Credits</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>CS101</td>
-                            <td>Introduction to Programming</td>
-                            <td>15</td>
+                            <td><?php echo htmlspecialchars($row['ProgrammeID']); ?></td>
+                            <td><?php echo htmlspecialchars($row['ProgrammeName']); ?></td>
+                            <td><?php echo htmlspecialchars($row['LevelName']); ?></td>
+                            <td><?php echo htmlspecialchars($row['Description'] ?? ''); ?></td>
                             <td>
-                                <button class="btn">Edit</button>
+                            <td>
+                            <a href="edit_programme.php?id=<?php echo $row['ProgrammeID']; ?>"><button class="btn">Edit</button></a>
+                            <a href="delete_programme.php?id=<?php echo $row['ProgrammeID']; ?>"><button class="btn btn-danger">Delete</button></a>
+
                             </td>
                         </tr>
-                        <tr>
-                            <td>CS205</td>
-                            <td>Database Systems</td>
-                            <td>20</td>
-                            <td>
-                                <button class="btn">Edit</button>
-                            </td>
-                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modules Card -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Module Management</h3>
+            <a href="add_modules.php"><button class="btn btn-primary">+ Add Module</button></a>
+        </div>
+        <div class="card-content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Module Name</th>
                         
-                    </tbody>
-                </table>
-            </div>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($row = $modulesResult->fetch_assoc()) { ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($row['ModuleID']); ?></td>
+                            <td><?php echo htmlspecialchars($row['ModuleName']); ?></td>
+                            
+                            <td>
+    <a href="edit_module.php?id=<?php echo $row['ModuleID']; ?>"><button class="btn">Edit</button></a>
+    <a href="delete_module.php?id=<?php echo $row['ModuleID']; ?>"><button class="btn btn-danger">Delete</button></a>
+                          </td>                   
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
         </div>
-        
+    </div>
+
+
         <div class="card">
             <div class="card-header">
                 <h3>Quick Stats</h3>
