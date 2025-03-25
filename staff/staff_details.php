@@ -1,32 +1,16 @@
 <?php
-// Database connection
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db = "student_course_hub";
+require 'db_connect.php';
 
-$conn = new mysqli($host, $user, $pass, $db);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Get staff ID from URL
-$staffID = isset($_GET['staff_id']) ? (int) $_GET['staff_id'] : 0;
+$staffID = isset($_GET['staff_id']) ? (int)$_GET['staff_id'] : 0;
 
 $sql = "SELECT Name, JobTitle, Photo, Email, Phone, Biography 
-        FROM Staff WHERE StaffID = ?";
+        FROM Staff WHERE StaffID = :staff_id";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(['staff_id' => $staffID]);
+$staff = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $staffID);
-$stmt->execute();
-$result = $stmt->get_result();
-$staff = $result->fetch_assoc();
-
-// If staff ID is invalid, redirect back to staff list
 if (!$staff) {
-    header("Location: staff.php");
+    echo "Error: Staff member with ID $staffID not found.";
     exit;
 }
 ?>
@@ -59,6 +43,7 @@ if (!$staff) {
         h2 { color: #333; margin-bottom: 5px; }
         p { color: #555; margin: 5px 0; }
         .contact-info a { color: #007bff; text-decoration: none; font-weight: bold; }
+        .contact-info a:hover, .contact-info a:focus { color: #0056b3; outline: 2px solid #000; outline-offset: 2px; }
         .back-button {
             display: inline-block;
             margin-top: 15px;
@@ -68,15 +53,16 @@ if (!$staff) {
             text-decoration: none;
             border-radius: 5px;
         }
-        .back-button:hover {
+        .back-button:hover, .back-button:focus {
             background-color: #0056b3;
+            outline: 2px solid #000;
+            outline-offset: 2px;
         }
     </style>
 </head>
 <body>
-
     <div class="profile-card">
-        <img src="staff_photo/<?php echo htmlspecialchars($staff['Photo']); ?>" alt="<?php echo htmlspecialchars($staff['Name']); ?>">
+        <img src="staff_photo/<?php echo htmlspecialchars($staff['Photo'] ?: 'default.jpg'); ?>" alt="Photo of <?php echo htmlspecialchars($staff['Name']); ?>">
         <h2><?php echo htmlspecialchars($staff['Name']); ?></h2>
         <p><strong><?php echo htmlspecialchars($staff['JobTitle']); ?></strong></p>
         <p><strong>Biography:</strong> <?php echo htmlspecialchars($staff['Biography'] ?: 'No biography available.'); ?></p>
@@ -86,8 +72,7 @@ if (!$staff) {
             <p><strong>Phone:</strong> <?php echo htmlspecialchars($staff['Phone']); ?></p>
         </div>
         
-        <a href="../staff/staff.php" class="back-button">Back to Staff List</a>
+        <a href="staff.php" class="back-button" tabindex="0">Back to Staff List</a>
     </div>
-
 </body>
 </html>

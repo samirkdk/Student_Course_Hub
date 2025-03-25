@@ -1,45 +1,22 @@
 <?php
-// Database connection
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db = "student_course_hub";
-
-$conn = new mysqli($host, $user, $pass, $db);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require 'db_connect.php'; // Adjusted path from staff/ to root
 
 // Get search & filter inputs
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $jobFilter = isset($_GET['jobFilter']) ? $_GET['jobFilter'] : '';
 
 // SQL Query with search & filter
-$sql = "SELECT StaffID, Name, JobTitle, Photo, Email, Phone FROM Staff WHERE Name LIKE ?";
+$sql = "SELECT StaffID, Name, JobTitle, Photo, Email, Phone FROM Staff WHERE Name LIKE :search";
+$params = ['search' => "%$search%"];
 
 if (!empty($jobFilter)) {
-    $sql .= " AND JobTitle = ?";
+    $sql .= " AND JobTitle = :jobFilter";
+    $params['jobFilter'] = $jobFilter;
 }
 
-// Prepared Statement
-$stmt = $conn->prepare($sql);
-$searchTerm = "%$search%";
-
-if (!empty($jobFilter)) {
-    $stmt->bind_param("ss", $searchTerm, $jobFilter);
-} else {
-    $stmt->bind_param("s", $searchTerm);
-}
-
-$stmt->execute();
-$result = $stmt->get_result();
-
-$staffMembers = [];
-while ($row = $result->fetch_assoc()) {
-    $staffMembers[] = $row;
-}
+$stmt = $pdo->prepare($sql);
+$stmt->execute($params);
+$staffMembers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -55,6 +32,12 @@ while ($row = $result->fetch_assoc()) {
         .staff-card img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; }
         .staff-card h3 { margin: 0 0 5px; }
         .staff-card p { margin: 5px 0; }
+        .staff-card a { color: #007bff; text-decoration: none; }
+        .staff-card a:hover, .staff-card a:focus { color: #0056b3; outline: 2px solid #000; outline-offset: 2px; }
+        form { margin-bottom: 20px; }
+        input, select, button { padding: 5px; margin-right: 10px; }
+        button { background-color: #007bff; color: white; border: none; border-radius: 5px; }
+        button:hover, button:focus { background-color: #0056b3; outline: 2px solid #000; outline-offset: 2px; }
     </style>
 </head>
 <body>
@@ -62,8 +45,10 @@ while ($row = $result->fetch_assoc()) {
 
     <!-- Search and Filter Form -->
     <form method="GET" action="">
-        <input type="text" name="search" placeholder="Search by name..." value="<?php echo htmlspecialchars($search); ?>">
-        <select name="jobFilter">
+        <label for="search">Search by name:</label>
+        <input type="text" id="search" name="search" placeholder="Search by name..." value="<?php echo htmlspecialchars($search); ?>">
+        <label for="jobFilter">Filter by job title:</label>
+        <select id="jobFilter" name="jobFilter">
             <option value="">All Job Titles</option>
             <option value="Professor" <?php if ($jobFilter == "Professor") echo "selected"; ?>>Professor</option>
             <option value="Senior Lecturer" <?php if ($jobFilter == "Senior Lecturer") echo "selected"; ?>>Senior Lecturer</option>
@@ -76,12 +61,12 @@ while ($row = $result->fetch_assoc()) {
     <div class="staff-container">
         <?php foreach ($staffMembers as $staff) { ?>
             <div class="staff-card">
-                <img src="staff_photo/<?php echo htmlspecialchars($staff['Photo']); ?>" alt="<?php echo htmlspecialchars($staff['Name']); ?>">
+                <img src="staff_photo/<?php echo htmlspecialchars($staff['Photo']); ?>" alt="Photo of <?php echo htmlspecialchars($staff['Name']); ?>">
                 <h3><?php echo htmlspecialchars($staff['Name']); ?></h3>
                 <p><strong><?php echo htmlspecialchars($staff['JobTitle']); ?></strong></p>
                 <p>Email: <a href="mailto:<?php echo htmlspecialchars($staff['Email']); ?>"><?php echo htmlspecialchars($staff['Email']); ?></a></p>
                 <p>Phone: <?php echo htmlspecialchars($staff['Phone']); ?></p>
-                <a href="staff_details.php?staff_id=<?php echo $staff['StaffID']; ?>">View Profile</a>
+                <a href="staff_details.php?staff_id=<?php echo $staff['StaffID']; ?>" tabindex="0">View Profile</a>
             </div>
         <?php } ?>
     </div>
