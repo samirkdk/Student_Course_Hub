@@ -15,9 +15,9 @@
     
         <ul>
        <li><a class="active" href="#">Home</a></li> 
-       <li><a href="#">Programmes</a></li> 
-       <li><a href="#">Staff</a></li> 
-       <li><a href="#">About</a></li> 
+       <li><a href="../Courses/courses_front.php">Programmes</a></li> 
+       <li><a href="../staff/staff.php">Staff</a></li> 
+      
        <li><a href="#">Search</a></li> 
         </ul>
 
