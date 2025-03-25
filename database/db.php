@@ -4,10 +4,10 @@ $servername = 'localhost:3388';
 $username = 'root';
 $password = '';
 $dbname = 'student_course_hub';
-$port = 3388;
+
 
 // Create connection
-$conn = new mysqli($servername, $username, $password,$dbname,$port);
+$conn = new mysqli($servername, $username, $password,$dbname);
 
 // Check connection
 if ($conn->connect_error) {

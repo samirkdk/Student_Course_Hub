@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../database/db.php'; // Include DB connection
 
 // SQL query to fetch all staff members
-$sql = "SELECT StaffID, Name FROM staff";
+$sql = "SELECT StaffID, Name FROM Staff";
 $result = $conn->query($sql);
 
 if (!$result) {

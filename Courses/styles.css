@@ -1,0 +1,165 @@
+/* General styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6; /* Improved readability (WCAG 1.4.8) */
+}
+
+/* Header styling */
+header {
+    background-color: #003087; /* University blue */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+/* Navigation */
+nav {
+    background-color: #005bb5;
+    padding: 10px;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 10px; /* Larger clickable area (WCAG 2.4.7) */
+}
+
+nav a:hover,
+nav a:focus {
+    text-decoration: underline;
+    outline: 2px solid #fff; /* Visible focus indicator (WCAG 2.4.7) */
+    outline-offset: 2px;
+}
+
+/* Main content */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.programme-section h2 {
+    color: #003087;
+    border-bottom: 2px solid #005bb5;
+    padding-bottom: 5px;
+}
+
+.programme-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    padding: 20px;
+}
+
+.programme-card h3 {
+    color: #005bb5;
+    margin-top: 0;
+}
+
+.programme-card p {
+    line-height: 1.6;
+}
+
+.highlights, .requirements, .careers, .modules {
+    margin: 15px 0;
+}
+
+.highlights h4, .requirements h4, .careers h4, .year h4 {
+    color: #003087;
+    margin-bottom: 10px;
+}
+
+.highlights ul, .requirements ul, .careers ul, .year ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.highlights li, .requirements li, .careers li, .year li {
+    margin: 5px 0;
+}
+
+.action-buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.register-btn, .unregister-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.register-btn {
+    background-color: #28a745; /* Green */
+}
+
+.register-btn:hover,
+.register-btn:focus {
+    background-color: #218838;
+    outline: 2px solid #000; /* Visible focus indicator (WCAG 2.4.7) */
+    outline-offset: 2px;
+}
+
+.unregister-btn {
+    background-color: #dc3545; /* Red */
+}
+
+.unregister-btn:hover,
+.unregister-btn:focus {
+    background-color: #c82333;
+    outline: 2px solid #000; /* Visible focus indicator (WCAG 2.4.7) */
+    outline-offset: 2px;
+}
+
+/* Links in content */
+.programme-card a {
+    color: #005bb5;
+    text-decoration: underline;
+}
+
+.programme-card a:hover,
+.programme-card a:focus {
+    color: #003087;
+    outline: 2px solid #000; /* Visible focus indicator (WCAG 2.4.7) */
+    outline-offset: 2px;
+}
+
+/* Ensure sufficient color contrast (WCAG 1.4.3) */
+:root {
+    --link-color: #005bb5; /* Contrast ratio of 4.5:1 against white background */
+    --link-hover: #003087; /* Contrast ratio maintained */
+}
+
+/* Reduced motion for accessibility (WCAG 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
