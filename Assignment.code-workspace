@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": "../../../Ctec2025"
+		},
+		{
+			"path": "../CTEC_2025"
+		},
+		{
+			"path": "../crud"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "staff_photo"
+		},
+		{
+			"path": "README"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "CTEC_2025"
+	}
+}
